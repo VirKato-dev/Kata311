@@ -55,7 +55,7 @@ public class UsersController {
      */
     @GetMapping("/{id}")
     public String read(Model model, @PathVariable(name = "id") long id) {
-//        model.addAttribute("user", userService.show(id));
+        model.addAttribute("user", userRepo.findById(id).orElse(new User()));
         return "users/show";
     }
 
@@ -66,7 +66,7 @@ public class UsersController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable() long id) {
-//        model.addAttribute("user", userService.show(id));
+        model.addAttribute("user", userRepo.findById(id).orElse(new User()));
         return "users/edit";
     }
 
@@ -75,7 +75,8 @@ public class UsersController {
      */
     @PatchMapping("/{id}")
     public String edit(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-//        userService.update(id, user);
+        user.setId(id);
+        userRepo.save(user);
         return "redirect:/users";
     }
 
@@ -86,7 +87,7 @@ public class UsersController {
      */
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") long id) {
-//        userService.delete(id);
+        userRepo.deleteById(id);
         return "redirect:/users";
     }
 

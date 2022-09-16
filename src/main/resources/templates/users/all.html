@@ -23,6 +23,7 @@
 
         .no-border {
             border: 0;
+            width: fit-content;
         }
     </style>
 </head>
@@ -41,12 +42,12 @@
         <tbody>
         <tr th:each="u, it : ${users}">
             <th th:text="${it.index}+1"></th>
-            <td><a th:href="@{/users/{i}(i=${u.id})}" th:text="${u.name} + ' ' + ${u.family}"/></td>
+            <td style="width: 100%"><a th:href="@{/users/{i}(i=${u.getId()})}" th:text="${u.getName()} + ' ' + ${u.getFamily()}"/></td>
             <td class="no-border">
-                <form th:method="get" th:action="@{/users/{i}/edit(i=${u.id})}">
+                <form th:method="get" th:action="@{/users/{i}/edit(i=${u.getId()})}">
                     <input type="submit" value="редакт."/>
                 </form>
-                <form th:method="delete" th:action="@{/users/{i}(i=${u.id})}">
+                <form th:method="delete" th:action="@{/users/{i}(i=${u.getId()})}">
                     <input type="submit" value="удалить"/>
                 </form>
             </td>

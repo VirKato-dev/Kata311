@@ -1,8 +1,7 @@
 package my.virkato.kata311.controller;
 
 import my.virkato.kata311.model.User;
-import my.virkato.kata311.repo.UserRepo;
-import org.springframework.data.repository.CrudRepository;
+import my.virkato.kata311.service.MyService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +11,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/users")
 public class UsersController {
 
-    private final CrudRepository<User, Long> userRepo;
+    private final MyService<User> userService;
 
-    public UsersController(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public UsersController(MyService<User> userRepo) {
+        this.userService = userRepo;
         addUsers();
     }
 
@@ -34,8 +33,7 @@ public class UsersController {
      */
     @PostMapping
     public String create(@ModelAttribute("user") User user) {
-        // параметры собираются сразу в модель User
-        userRepo.save(user);
+        userService.create(user);
         return "redirect:users";
     }
 
@@ -46,7 +44,7 @@ public class UsersController {
      */
     @GetMapping
     public String index(Model model) {
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.getList());
         return "users/all";
     }
 
@@ -55,7 +53,7 @@ public class UsersController {
      */
     @GetMapping("/{id}")
     public String read(Model model, @PathVariable(name = "id") long id) {
-        model.addAttribute("user", userRepo.findById(id).orElse(new User()));
+        model.addAttribute("user", userService.show(id));
         return "users/show";
     }
 
@@ -66,7 +64,7 @@ public class UsersController {
      */
     @GetMapping("/{id}/edit")
     public String editForm(Model model, @PathVariable() long id) {
-        model.addAttribute("user", userRepo.findById(id).orElse(new User()));
+        model.addAttribute("user", userService.show(id));
         return "users/edit";
     }
 
@@ -75,8 +73,7 @@ public class UsersController {
      */
     @PatchMapping("/{id}")
     public String edit(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-        user.setId(id);
-        userRepo.save(user);
+        userService.update(id, user);
         return "redirect:/users";
     }
 
@@ -87,7 +84,7 @@ public class UsersController {
      */
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") long id) {
-        userRepo.deleteById(id);
+        userService.delete(id);
         return "redirect:/users";
     }
 
@@ -97,10 +94,10 @@ public class UsersController {
      * Подготовим список пользователей в базе
      */
     private void addUsers() {
-        userRepo.save(new User("Степан", "Иванов"));
-        userRepo.save(new User("Иван", "Петров"));
-        userRepo.save(new User("Света", "Вихрь"));
-        userRepo.save(new User("Алина", "Хац"));
+        userService.create(new User("Степан", "Иванов"));
+        userService.create(new User("Иван", "Петров"));
+        userService.create(new User("Света", "Вихрь"));
+        userService.create(new User("Алина", "Хац"));
     }
 
 }

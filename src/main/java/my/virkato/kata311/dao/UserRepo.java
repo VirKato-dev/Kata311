@@ -1,4 +1,4 @@
-package my.virkato.kata311.repo;
+package my.virkato.kata311.dao;
 
 import my.virkato.kata311.model.User;
 import org.springframework.data.repository.CrudRepository;

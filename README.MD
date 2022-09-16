@@ -19,10 +19,9 @@
 ### Реализовано:
 1. CRUD-функционал в UserRepo (CrudRepository<User, Long>)
 2. класс User с полями (id, name и family).
-3. Список всех пользователей на странице /users
-4. Автоконфигурация Spring Boot и application.properties.
-5. Вместо SessionFactory используется EntityManager.
-6. Добавлена поддержка Http-методов PATCH и DELETE
+3. Автоконфигурация Spring Boot и application.properties.
+4. Добавлена поддержка Http-методов PATCH и DELETE
+5. Слой Service как прослойка между DAO и UsersController
 
 ### Ендпоинты:
 - ***/*** (GET, POST) - приглашение в список пользователей

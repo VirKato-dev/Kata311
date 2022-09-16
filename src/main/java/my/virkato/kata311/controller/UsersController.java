@@ -32,7 +32,7 @@ public class UsersController {
     /***
      * Сохранить в базу
      */
-    @PostMapping("")
+    @PostMapping
     public String create(@ModelAttribute("user") User user) {
         // параметры собираются сразу в модель User
         userRepo.save(user);
@@ -44,7 +44,7 @@ public class UsersController {
     /***
      * Получить всех пользователей
      */
-    @GetMapping("")
+    @GetMapping
     public String index(Model model) {
         model.addAttribute("users", userRepo.findAll());
         return "users/all";

@@ -25,8 +25,8 @@ public class User {
     }
 
     public User(User user) {
-        name = user.getName();
-        family = user.getFamily();
+        this(user.name, user.family);
+        this.id = user.id;
     }
 
     public Long getId() {
